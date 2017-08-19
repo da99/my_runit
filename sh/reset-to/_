@@ -15,10 +15,4 @@ sudo sv stop $SV_NAME     || :
 sudo sv stop $SV_NAME/log || :
 sudo rm -f /var/service/$SV_NAME
 
-# Remove pid and lock files to prevent warning
-# "unable to open supervise/ok: file does not exist."
-# From:
-# https://serverfault.com/questions/520741/runit-unable-to-open-supervise-ok-file-does-not-exist 
-sudo rm -rf "$(realpath /var/service/$SV_NAME)"
-
 sudo ln -s "$NEW_DIR" /var/service/$SV_NAME
