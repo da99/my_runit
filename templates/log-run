@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+#
+# exec logger -p daemon.notice -t www_paradise
+mkdir -p        /var/log/{{NAME}}
+chown {{USER}}:{{USER}} -R  /var/log/{{NAME}}
+exec chpst -u {{USER}} svlogd -tt /var/log/{{NAME}}
+

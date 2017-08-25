@@ -1,0 +1,44 @@
+#!/usr/bin/env zsh
+#
+# === {{CMD}} create [NAME]
+#
+set -u -e -o pipefail
+
+local +x ACTION=$1; shift
+
+case "$ACTION" in
+
+  create)
+    local +x NAME="$(basename "$PWD")"
+    if [[ -n "$@" ]]; then
+      local +x NAME="$1"; shift
+    fi
+
+    local +x ORIGIN="$PWD"
+    local +x NEW_DIR="runit/$NAME"
+    mkdir -p "$NEW_DIR"
+    cd "$NEW_DIR"
+
+    if [[ ! -e run ]]; then
+      my_zsh render USER $USER NAME $NAME "$THIS_DIR/templates/run" > run
+    fi
+    chmod +x run
+
+    if [[ ! -e log/run ]]; then
+      mkdir -p log
+      my_zsh render USER $USER NAME $(basename "$PWD") "$THIS_DIR/templates/log-run" > log/run
+    fi
+
+    chmod +x log/run
+
+    cd "$ORIGIN"
+    tree runit/"$NAME" >&2
+    ;;
+
+  *)
+    echo "!!! Invalid option: $@" >&2
+    exit 1
+    ;;
+
+esac
+

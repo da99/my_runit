@@ -12,6 +12,7 @@ fi
 local +x THE_ARGS="$@"
 local +x THIS_DIR="$(dirname "$(dirname "$(realpath "$0")")")"
 PATH="$PATH:$THIS_DIR/bin"
+PATH="$PATH:$THIS_DIR/../my_zsh/bin"
 
 case $ACTION in
 
