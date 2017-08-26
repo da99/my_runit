@@ -7,15 +7,13 @@ set -u -e -o pipefail
 set "-x"
 local +x SV_NAME="$1"; shift
 
+# Remove the service. This also stops the log service if it exists.
+sudo rm -f /var/service/$SV_NAME
+
 cd "$1"; shift
 local +x NEW_DIR="$PWD"
 
 find . -type f -name run | xargs -I NAME chmod +x NAME
 
-sudo sv stop $SV_NAME     || :
-sudo sv stop $SV_NAME/log || :
-sleep 1
-sudo rm -f /var/service/$SV_NAME
-sleep 1
+sleep 2
 sudo ln -s "$NEW_DIR" /var/service/$SV_NAME
-sleep 1
