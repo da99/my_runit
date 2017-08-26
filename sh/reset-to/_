@@ -34,5 +34,6 @@ local +x NEW_DIR="$PWD"
 find . -type f -name run | xargs -I NAME chmod +x NAME
 
 sleep 2
+set "-x"
 sudo ln -s "$NEW_DIR" "$VAR_SERVICE"
 
