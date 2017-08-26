@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+#
+# === {{CMD}} sv-name
+#
+set -u -e -o pipefail
+
+local +x name=$1; shift
+
+[[ "$(pgrep -f "runsv $name" | wc -l)" -lt 1 ]]
+
