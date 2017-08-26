@@ -14,6 +14,7 @@ find . -type f -name run | xargs -I NAME chmod +x NAME
 
 sudo sv stop $SV_NAME     || :
 sudo sv stop $SV_NAME/log || :
+sleep 2
 sudo rm -f /var/service/$SV_NAME
 
 sudo ln -s "$NEW_DIR" /var/service/$SV_NAME
