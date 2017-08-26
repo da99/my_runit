@@ -4,15 +4,15 @@
 #
 set -u -e -o pipefail
 
-set "-x"
 local +x SV_NAME="$1"; shift
-local +x OLD_LOG="/var/service/${SV_NAME}_old"
-local +x NEW_LOG="/var/service/${SV_NAME}"
+local +x VAR_SERVICE="/var/service/$SV_NAME"
+local +x OLD_LOG="/var/log/${SV_NAME}_old"
+local +x NEW_LOG="/var/log/${SV_NAME}"
 
 # Remove the service. This also stops the log service if it exists.
-if [[ -e /var/service/$SV_NAME ]]; then
+if [[ -e $VAR_SERVICE ]]; then
   sudo sv stop $SV_NAME
-  sudo rm -f /var/service/$SV_NAME
+  sudo rm -f $VAR_SERVICE
   process loop every 0.5 max 10 or until my_runit is-finished $SV_NAME
 fi
 
@@ -34,4 +34,5 @@ local +x NEW_DIR="$PWD"
 find . -type f -name run | xargs -I NAME chmod +x NAME
 
 sleep 2
-sudo ln -s "$NEW_DIR" /var/service/$SV_NAME
+sudo ln -s "$NEW_DIR" "$VAR_SERVICE"
+
