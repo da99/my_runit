@@ -10,9 +10,11 @@ local +x OLD_LOG="/var/service/${SV_NAME}_old"
 local +x NEW_LOG="/var/service/${SV_NAME}"
 
 # Remove the service. This also stops the log service if it exists.
-sudo rm -f /var/service/$SV_NAME
-
-process loop every 0.5 max 10 or until my_runit is-finished $SV_NAME
+if [[ -e /var/service/$SV_NAME ]]; then
+  sudo sv stop $SV_NAME
+  sudo rm -f /var/service/$SV_NAME
+  process loop every 0.5 max 10 or until my_runit is-finished $SV_NAME
+fi
 
 while [[ "$(pgrep -f $SV_NAME | wc -l)" -lt 2 ]]; do
   sleep 0.5
