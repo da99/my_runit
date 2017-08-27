@@ -36,6 +36,6 @@ local +x NEW_DIR="$PWD"
 
 find . -type f -name run | xargs -I NAME chmod +x NAME
 
-sleep 7
+process wait 7s
 ln -s "$NEW_DIR" "$VAR_SERVICE"
 
