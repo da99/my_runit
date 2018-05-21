@@ -3,9 +3,9 @@
 #
 # exec logger -p daemon.notice -t www_paradise
 set -u -e
-sv_name={{NAME}}
-sv_log_dir=/var/log/$sv_name
+sv_name={{USER}}_{{NAME}}
+sv_log_dir=/progs/logs/$sv_name
 mkdir -p        $sv_log_dir
 chown {{USER}}:{{USER}} -R  $sv_log_dir
-exec chpst -u {{USER}} svlogd -tt $sv_log_dir
+exec svlogd -tt $sv_log_dir
 
